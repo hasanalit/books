@@ -72,6 +72,7 @@ overflow: hidden;
   margin-bottom: 20px;
   padding: 12px 20px 13px;
   background-color: transparent;
+  color: #fff;
   border: 1px solid #fff;
   border-radius: 4px;
 }
@@ -80,6 +81,7 @@ overflow: hidden;
   margin-bottom: 43px;
   padding: 12px 20px 13px;
   background-color: transparent;
+  color: #fff;
   border: 1px solid #fff;
   border-radius: 4px;
 }
