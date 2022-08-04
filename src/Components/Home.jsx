@@ -1,14 +1,14 @@
-import {NavLink} from 'react-router-dom';
+
 import styled from 'styled-components';
+import Header from './Header';
+import Main from './Main';
 
 
 function Home() {
   return (
     <Wrapper>
-    <h1>Xush kelibsz!</h1>
-    <button className='btn'>
-      <NavLink className={'navLink'} to='/'>Behind</NavLink>
-    </button>
+      <Header />
+      <Main />
     </Wrapper>
   );
 }
@@ -16,8 +16,5 @@ function Home() {
 export default Home;
 
 const Wrapper = styled.div`
-.navLink {
-    text-decoration: none;
-    color: #000;
-}
+
 `
