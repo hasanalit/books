@@ -13,7 +13,7 @@ function Main(){
     useEffect(() => {
         axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchName}&startIndex=${startIndex}`)
         .then(res => setData(res.data.items))
-    }, []);
+    }, );
 
     console.log(data);
 
@@ -41,7 +41,7 @@ function Main(){
                         return(
                             <li key={row.id} className='main-right'>
                                 <div className='right-list'>
-                                <img className='main-right-img' src={row.volumeInfo.imageLinks.smallThumbnail} alt="picture" />
+                                <img className='main-right-img' src={row.volumeInfo.imageLinks.smallThumbnail} alt="main img" />
                                 <h3 className='main-right-heading'>{row.volumeInfo.title}</h3>
                                 <p className='main-right-text'>{row.volumeInfo.authors}</p>
                                 <p className='main-right-date'>{row.volumeInfo.publishedDate}</p>
@@ -144,13 +144,13 @@ const Wrapper = styled.div`
 }
 
 .main-right {
-    margin-left: 33px;
+    margin-left: 35px;
     margin-top: 33px;
     background: #FFFFFF;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    width: 282px;
-    height: 455px;
+    width: 300px;
+    height: 460px;
     list-style: none;
 }
 
@@ -173,7 +173,7 @@ const Wrapper = styled.div`
     margin: 0;
     margin-top: 19px;
     margin-bottom: 2px;
-    width: 240px;
+    width: 250px;
     height: 45px;
 }
 
@@ -185,7 +185,7 @@ const Wrapper = styled.div`
     line-height: 18px;
     color: #757881;
     font-family: 'Noto Sans';
-    width: 240px;
+    width: 250px;
 }
 
 .main-right-date {
@@ -205,7 +205,7 @@ const Wrapper = styled.div`
 }
 
 .main-right-bookmark {
-    padding: 10px 26px;
+    padding: 10px 31px;
     background: #FFD80D;
     border: 0px solid #fff;
     border-radius: 4px;
@@ -219,7 +219,7 @@ const Wrapper = styled.div`
 
 .main-right-info {
     margin-left: 7px;
-    padding: 10px 26px;
+    padding: 10px 31px;
     background: rgba(13, 117, 255, 0.05);
     border-radius: 4px;
     border: 0px solid #fff;
@@ -233,7 +233,7 @@ const Wrapper = styled.div`
 
 .main-right-read {
     margin-top: 5px;
-    padding: 10px 106px;
+    padding: 10px 113px;
     background: #75828A;
     border-radius: 4px;
     border: 0px solid #fff;
