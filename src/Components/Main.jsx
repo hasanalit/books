@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 import dateImg from '../Assets/Images/date.png'
+import ReactPaginate from 'react-paginate';
 import axios from 'axios'
 import {useState, useEffect } from 'react'
 
 function Main(){
+
+    const [num, setNum] = useState()
+    const [posts, setPosts] = useState([])
+    const [totalItems, setTotalItems] = useState(0)
+    const [pageNumber, setPageNumber] = useState(0)
 
     const [data, setData] = useState([])
     let searchName = "python"
@@ -12,16 +18,40 @@ function Main(){
 
     useEffect(() => {
         axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchName}&startIndex=${startIndex}`)
-        .then(res => setData(res.data.items))
+        .then(res => { setData(res.data.items)
+            setTotalItems(res.data.totalItems)
+            setPosts(res.data.items)
+
+        // console.log(res.data)
+    })
+
     }, );
 
-    console.log(data);
 
 
+    const changePage = ({ selected }) => {
+      setPageNumber(selected)
+      startIndex = (selected ) * 10
+      console.log(startIndex);
+
+      axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchName}&startIndex=${startIndex}`)
+      .then(response => {
+        //   setData(response.data.items)
+        //   setPosts(response.data.items)
+        //   setTotalItems(response.data.totalItems)
+          setNum(response.data.items)
+      })
+
+    }
+
+    const userPerPage = 10
+    const pageVisited = pageNumber * userPerPage;
+
+    const displayUsers = posts.slice(pageVisited, pageVisited + userPerPage)
+    const pageCount = Math.ceil(totalItems / userPerPage)
 
     return(
         <Wrapper>
-            {/* {data} */}
             <main className='main'>
                 <div className='main-top'>
                     <h5 className='main-top-heading'>Showing 18 Result(s)</h5>
@@ -35,9 +65,10 @@ function Main(){
                         <h3 className='main-bookmark-heading'>Bookmarks</h3>
                         <p className='main-bookmark-text'>If you don’t like to read, you haven’t found the right book</p>
                     </div>
+                    <div>
                     <ul className='main-right_books'>
                    {
-                     data?.map(row => {
+                     (data, displayUsers, num)?.map(row => {
                         return(
                             <li key={row.id} className='main-right'>
                                 <div className='right-list'>
@@ -56,6 +87,19 @@ function Main(){
                     })
                    }
                    </ul>
+                   <ReactPaginate
+                   className='list'
+                   previousLabel={"Previous"}
+                   nextLabel={"Next"}
+                   pageCount={pageCount}
+                   onPageChange={changePage}
+                   containerClassName={"paginationBttns"}
+                   previousLinkClassName={"previousBttn"}
+                   nextLinkClassName={"nextBttn"}
+                   disabledClassName={"paginationDisabled"}
+                   activeClassName={"paginationActive"}
+                    />
+                    </div>
 
                 </div>
             </main>
@@ -150,7 +194,7 @@ const Wrapper = styled.div`
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     width: 300px;
-    height: 460px;
+    height: 465px;
     list-style: none;
 }
 
@@ -161,7 +205,7 @@ const Wrapper = styled.div`
 }
 
 .right-list {
-    padding: 13px 17px;
+    padding: 13px 17px 13px 22px;
 }
 
 .main-right-img {
@@ -243,4 +287,48 @@ const Wrapper = styled.div`
     line-height: 17px;
     color: #FFFFFF;
 }
+
+.heading {
+    margin-left: 40px;
+    margin-bottom: 48px;
+    color: lightskyblue;
+  }
+
+  .list-group {
+    list-style: none;
+  }
+
+  .list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+  }
+
+  .list li {
+    margin-right: 4px;
+    text-decoration: none;
+
+    border-radius: 3px;
+  }
+
+  .list li:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  .list li a {
+    padding: 10px 15px;
+    border: 1px solid #DFE3E8;
+    background-color: white;
+    border-radius: 4px;
+    color: #000;
+    font-weight: 400;
+  }
+
+  .paginationActive{
+    padding: 10px 0px;
+    color:#0D75FF;
+    border: 1.5px solid #0D75FF;
+    background-color: transparent;
+  }
 `
